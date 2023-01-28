@@ -1,11 +1,11 @@
 function solution(n) {
-    var answer = [];
+  var answer = [];
 
-    let num = n.toString().split('').reverse();
+  let num = n.toString().split("").reverse();
 
-    for (let i = 0; i < num.length; i++){
-        answer.push(+num[i]);
-    }
+  for (let i = 0; i < num.length; i++) {
+    answer.push(+num[i]);
+  }
 
-    return answer;
+  return answer;
 }
