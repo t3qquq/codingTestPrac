@@ -1,7 +1,8 @@
 function solution(N, arr1) {
-  // let x = [1, -1, 0, 0, 1, 1, -1, -1];
-  // let y = [0, 0, 1, -1, 1, -1, 1, -1];
+  let x = [1, -1, 0, 0, 1, 1, -1, -1];
+  let y = [0, 0, 1, -1, 1, -1, 1, -1];
   let answer = [];
+  let dimen1Arr = [];
 
   //(N+2) * (N+2) 사이즈 배열
   let extendedArr = [];
@@ -17,35 +18,26 @@ function solution(N, arr1) {
   //마지막줄
   extendedArr.push(Array(N + 2).fill("."));
 
+  for (let i = 1; i <= N; i++) {
+    for (let j = 1; j <= N; j++) {
+      if (!isNaN(parseInt(extendedArr[i][j]))) dimen1Arr.push("*");
+      else {
+        //x, y 활용하여 인접 8곳 순회하면서 확인
+        let mineCount = 0;
+        for (let k = 0; k < 8; k++) {
+          if (!isNaN(parseInt(extendedArr[i + x[k]][j + y[k]])))
+            mineCount += parseInt(extendedArr[i + x[k]][j + y[k]]);
+        }
+        mineCount >= 10
+          ? dimen1Arr.push("M")
+          : dimen1Arr.push(mineCount.toString());
+      }
+    }
+  }
 
-  // for (let i = 1; i <= N; i++) {
-  //   for (let j = 1; j <= N; j++) {
-  //     if (!isNaN(parseInt(extendedArr[i][j]))) answer.push("*");
-  //     else {
-  //       let mineCount = 0;
-  //       //extended[i][j]의 윗줄 3개
-  //       for (let k = j - 1; k <= j + 1; j++) {
-  //         if (!isNaN(parseInt(extendedArr[i - 1][k])))
-  //           mineCount += parseInt(extendedArr[i - 1][k]);
-  //       }
-  //       //extended[i][j] 왼쪽
-  //       if (!isNaN(parseInt(extendedArr[i][j - 1])))
-  //         mineCount += parseInt(extendedArr[i][j - 1]);
-  //       // extended[i][j] 오른쪽
-  //       if (!isNaN(parseInt(extendedArr[i][j + 1])))
-  //         mineCount += parseInt(extendedArr[i][j + 1]);
-  //       //extended[i][j] 아랫줄 3개
-  //       for (let k = j - 1; k <= j + 1; j++) {
-  //         if (!isNaN(parseInt(extendedArr[i + 1][k])))
-  //           mineCount += parseInt(extendedArr[i - 1][k]);
-  //       }
-
-  //       mineCount >= 10 ? answer.push("M") : answer.push(mineCount.toString());
-  //     }
-  //   }
-  // }
-
-  console.log(answer);
+  for (let i = 0; i < N; i++) {
+    answer.push(dimen1Arr.slice(i * N + 0, i * N + N));
+  }
 
   return answer;
 }
